@@ -25,9 +25,40 @@ namespace csv {
             csv(std::string &filename) : m_filename{ filename }, m_sep{ SEP::comma } {};
             csv(std::string &filename, SEP sep) : m_filename{ filename }, m_sep{ SEP::comma } {};
 
-            void    write_rows(vec_string_vec &rows);
-            void    write_row(std::vector<std::string> &row);
+            void    write_rows(vec_string_vec &rows) const;
+            void    write_row(const std::vector<std::string> &row) const;
+
+            template<typename T>
+            void    write_col(T &val) const;
     };
+
+    void csv::write_rows(vec_string_vec &rows) const {
+        for ( const auto &row : rows ){
+            write_row( row );
+        }
+    }
+
+    void csv::write_row(const std::vector<std::string> &row) const {
+        std::ofstream file{ m_filename, std::ios_base::app };
+
+        for ( const auto &item : row ){
+            file << item;
+
+            if ( &item != &row.back() ){
+                file << static_cast<char>( m_sep );
+            }
+        }
+        file << std::endl;
+        file.close();
+    }
+
+    template<typename T>
+    void csv::write_col(T &val) const {
+        std::ofstream file{ m_filename, std::ios_base::app };
+
+        file << val;
+        file.close();
+    }
 };
 
 #endif // CSV_H
