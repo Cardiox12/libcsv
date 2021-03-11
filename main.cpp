@@ -1,6 +1,14 @@
 #include <iostream>
+#include "csv.hpp"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    csv::csv writer{ "./data.csv" };
+    csv::vec_string_vec rows = {
+            { "h1", "h2", "h3" },
+            { "lorem", "ipsum", "lorem" },
+            { "ipsum", "lorem", "ipsum" }
+    };
+
+    writer.write_rows( rows );
     return 0;
 }

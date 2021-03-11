@@ -22,17 +22,18 @@ namespace csv {
             SEP         m_sep;
         public:
             csv() : m_sep{ SEP::comma } {};
+            csv(const char *filename) : m_filename{ filename }, m_sep{ SEP::comma } {};
             csv(std::string &filename) : m_filename{ filename }, m_sep{ SEP::comma } {};
             csv(std::string &filename, SEP sep) : m_filename{ filename }, m_sep{ SEP::comma } {};
 
-            void    write_rows(vec_string_vec &rows) const;
+            void    write_rows(const vec_string_vec &rows) const;
             void    write_row(const std::vector<std::string> &row) const;
 
             template<typename T>
             void    write_col(T &val) const;
     };
 
-    void csv::write_rows(vec_string_vec &rows) const {
+    void csv::write_rows(const vec_string_vec &rows) const {
         for ( const auto &row : rows ){
             write_row( row );
         }
