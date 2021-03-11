@@ -10,5 +10,6 @@ int main() {
     };
 
     writer.write_rows( rows );
+    writer.read();
     return 0;
 }

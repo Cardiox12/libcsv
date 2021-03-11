@@ -26,11 +26,12 @@ namespace csv {
             csv(std::string &filename) : m_filename{ filename }, m_sep{ SEP::comma } {};
             csv(std::string &filename, SEP sep) : m_filename{ filename }, m_sep{ SEP::comma } {};
 
-            void    write_rows(const vec_string_vec &rows) const;
-            void    write_row(const std::vector<std::string> &row) const;
+            void            write_rows(const vec_string_vec &rows) const;
+            void            write_row(const std::vector<std::string> &row) const;
+            vec_string_vec  read() const;
 
             template<typename T>
-            void    write_col(T &val) const;
+            void            write_col(T &val) const;
     };
 
     void csv::write_rows(const vec_string_vec &rows) const {
@@ -59,6 +60,17 @@ namespace csv {
 
         file << val;
         file.close();
+    }
+
+    vec_string_vec csv::read() const {
+        vec_string_vec result;
+        std::ifstream file{ m_filename };
+        std::string line;
+
+        while ( ( std::getline( file, line ) ) ){
+            std::cout << line << std::endl;
+        }
+        return (result);
     }
 };
 
