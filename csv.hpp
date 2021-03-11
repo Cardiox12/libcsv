@@ -8,6 +8,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 namespace csv {
     using vec_string_vec = std::vector<std::vector<std::string>>;
@@ -63,14 +64,21 @@ namespace csv {
     }
 
     vec_string_vec csv::read() const {
-        vec_string_vec result;
+        vec_string_vec matrix;
         std::ifstream file{ m_filename };
         std::string line;
 
         while ( ( std::getline( file, line ) ) ){
-            std::cout << line << std::endl;
+            std::vector<std::string> tokens;
+            std::string token;
+            std::stringstream tmp(line);
+
+            while ( ( std::getline( tmp,  token, static_cast<char>(m_sep) ) ) ){
+                tokens.emplace_back( token );
+            }
+            matrix.emplace_back( tokens );
         }
-        return (result);
+        return (matrix);
     }
 };
 

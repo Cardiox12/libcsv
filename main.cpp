@@ -10,6 +10,13 @@ int main() {
     };
 
     writer.write_rows( rows );
-    writer.read();
+    csv::vec_string_vec matrix = writer.read();
+
+    for ( const auto &row : matrix ){
+        for ( const auto &col : row ){
+            std::cout << col << ",";
+        }
+        std::cout << std::endl;
+    }
     return 0;
 }
